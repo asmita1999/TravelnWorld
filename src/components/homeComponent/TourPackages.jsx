@@ -8,7 +8,7 @@ import maldiveImg from "../../assets/images/tourPackages/maldive.jpeg";
 import goaImg from "../../assets/images/tourPackages/goa.jpg";
 import darjeelingImg from "../../assets/images/tourPackages/darjeeling.jpg";
 import kashmirImg from "../../assets/images/tourPackages/kashmir.jpg";
-import MumbaiImg from "../../assets/images/tourPackages/mumbai.jpg";
+import MumbaiImg from "../../assets/images/tourPackages/mumbai.JPG";
 
 const DestinationCard = ({ title, description, image }) => {
   return (
