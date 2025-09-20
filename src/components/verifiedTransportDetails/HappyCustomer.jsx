@@ -8,14 +8,14 @@ import Icon4 from "../../assets/images/icons/icon4.jpeg";
  
 const testimonials = [
   {
-    name: "Aashmita",
+    name: "Rajat",
     image: Icon1,
     text: "Sitaaram Travels Pvt Ltd is an excellent choice for travel needs. They are always prompt in making reservations and provide fast responses to queries.",
     time: "00:17 PM",
     date: "31 Dec, 2024",
   },
   {
-    name: "Bashira",
+    name: "Krish",
     image: Icon2,
     text: "Sitaaram Travels Pvt Ltd offers excellent deals and discounts. Their service is top-notch and their packages are budget-friendly. I highly recommend them.",
     time: "06:47 PM",
@@ -29,7 +29,7 @@ const testimonials = [
     date: "29 Jan, 2024",
   },
   {
-    name: "Neha",
+    name: "Nehal",
     image: Icon4,
     text: "Booking was smooth and easy. The team guided me with best offers. My family trip turned out to be amazing because of them!",
     time: "11:15 AM",
