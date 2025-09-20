@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import transportData from "../data/transportData";
 import ReviewForm from "../forms/ReviewForm";
-import HappyCustomer from "./verifiedTransportDetails/HappyCustomer";
 
 const VerifiedTransportDetails = () => {
   const { id } = useParams();
@@ -44,133 +43,130 @@ const VerifiedTransportDetails = () => {
   return (
     <div className="w-full px-4 py-6 bg-white min-h-screen font-sans">
       {/* HEADER */}
-      <header className="mb-6 border rounded-md p-5 shadow-sm relative max-w-full">
-  <div className="flex flex-col gap-3">
-    {/* Title + Icon */}
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="text-2xl">👍</span>
-      <h1 className="font-bold text-xl sm:text-2xl truncate">Shivam travels</h1>
-      {/* Badges container */}
-      <div className="flex flex-wrap gap-1 max-w-full">
-  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-xs whitespace-nowrap">
-    Travel Agents
-  </span>
-  <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-xs whitespace-nowrap">
-    Tour Operators For Chardham
-  </span>
-</div>
-      {/* Bookmark Button */}
-      <button
-        onClick={() => setSaved(!saved)}
-        className={`ml-2 border rounded p-2 transition flex-shrink-0 ${
-          saved ? "bg-yellow-400 text-white" : "hover:bg-gray-100"
-        }`}
-        title="Save"
-      >
-        <Bookmark
-          size={18}
-          className={saved ? "fill-white" : ""}
-          fill={saved ? "white" : "none"}
-        />
-      </button>
-    </div>
-
-    {/* Ratings and Trust Badges */}
-    <div className="flex flex-wrap items-center gap-1 text-xs sm:text-sm">
-      <div className="bg-green-600 text-white rounded-md px-2 py-0.5 font-semibold flex items-center gap-1 whitespace-nowrap">
-        4.7 ★ <span className="text-white/80 font-normal">(Ratings)</span>
-      </div>
-      <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-md font-medium whitespace-nowrap flex items-center gap-1">
-        <span>🏆</span> Trust
-      </span>
-      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-medium whitespace-nowrap flex items-center gap-1">
-        ✔ Verified
-      </span>
-      <span className="bg-gray-100 text-black px-2 py-0.5 rounded-md font-medium whitespace-nowrap flex items-center gap-1">
-        ✅ Claimed
-      </span>
-    </div>
-
-    {/* Address and Open Time */}
-    <p className="text-xs sm:text-sm text-gray-700">
-      · Open 24 Hrs · 14 Years in Business
-    </p>
-
-    {/* Services */}
-    <div className="flex flex-wrap gap-3 text-xs sm:text-sm font-semibold text-gray-700">
-      <span>Flight Booking</span>
-      <span>Hotel Booking</span>
-      <span>Good offers 17 Suggestions</span>
-    </div>
-
-    {/* Buttons */}
-    <div className="flex flex-wrap gap-2">
-      <button className="bg-green-600 text-white px-4 py-1.5 rounded font-semibold flex items-center gap-1 whitespace-nowrap">
-        📞 07329212
-      </button>
-      <button className="bg-blue-600 text-white px-4 py-1.5 rounded font-semibold whitespace-nowrap">
-        Enquire Now
-      </button>
-      <button className="border border-green-600 text-green-600 px-4 py-1.5 rounded font-semibold whitespace-nowrap">
-        WhatsApp
-      </button>
-      <button className="border px-3 py-1.5 rounded hover:bg-gray-100 flex items-center gap-2">
-        <Share2 size={16} />
-      </button>
-      <button className="border px-3 py-1.5 rounded hover:bg-gray-100 flex items-center gap-2">
-        <Edit3 size={16} />
-      </button>
-    </div>
-
-    {/* Review */}
+      <header className="mb-6 border rounded-md p-5 shadow-sm relative">
+  <div className="flex flex-col gap-4">
+    {/* TITLE AND BADGES */}
     <div>
-      <p className="font-medium text-gray-800 text-sm mb-1">Start your Review</p>
-      <div className="flex gap-1">
-        {[1, 2, 3, 4, 5].map((n) => (
-          <span
-            key={n}
-            onClick={() => {
-              setSelectedRating(n);
-              setShowReviewForm(true);
-            }}
-            className="text-gray-400 text-3xl cursor-pointer hover:text-yellow-400 transition"
-          >
-            ★
+      <div className="flex items-start gap-2 mb-1 flex-wrap">
+        <span className="text-2xl">👍</span>
+        <h1 className="font-bold text-2xl sm:text-3xl">{travelItem.title}</h1>
+      </div>
+
+      {/* Badges */}
+      <div className="flex flex-wrap items-center gap-2 text-sm mb-2">
+        <div className="bg-green-600 text-white rounded-md px-2 py-0.5 font-semibold flex items-center gap-1">
+          {travelItem.rating} ★
+          <span className="text-white/80 font-normal">
+            ({travelItem.reviewsCount} Ratings)
           </span>
-        ))}
+        </div>
+        <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-md text-xs font-medium">
+          🏆 Trust
+        </span>
+        <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md text-xs font-medium">
+          ✔ Verified
+        </span>
+        <span className="bg-gray-100 text-black px-2 py-0.5 rounded-md text-xs font-medium">
+          ✅ Claimed
+        </span>
+      </div>
+
+      {/* ADDRESS */}
+      <p className="text-sm text-gray-700 mb-2">
+        {travelItem.address} ·{" "}
+        <span className="text-green-600 font-semibold">Open 24 Hrs</span> ·{" "}
+        {travelItem.yearsInBusiness || "14 Years"} in Business
+      </p>
+
+      {/* Services */}
+      <div className="flex flex-wrap gap-4 text-gray-700 text-sm font-semibold mb-4">
+        <span>Flight Booking</span>
+        <span>Hotel Booking</span>
+        <span>Good offers 17 Suggestions</span>
+      </div>
+
+      {/* BUTTONS + REVIEW */}
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-2">
+          <button className="bg-green-600 text-white px-4 py-1.5 rounded font-semibold flex items-center gap-1">
+            📞 07329212 {travelItem.phone}
+          </button>
+          <button className="bg-blue-600 text-white px-4 py-1.5 rounded font-semibold">
+            Enquire Now
+          </button>
+          <button className="border border-green-600 text-green-600 px-4 py-1.5 rounded font-semibold bg-green-50">
+            WhatsApp
+          </button>
+          <button className="border px-3 py-1.5 rounded hover:bg-gray-100 flex items-center gap-2">
+            <Share2 size={16} /> <span className="hidden sm:inline">Share</span>
+          </button>
+          <button className="border px-3 py-1.5 rounded hover:bg-gray-100 flex items-center gap-2">
+            <Edit3 size={16} /> <span className="hidden sm:inline">Edit</span>
+          </button>
+        </div>
+
+        {/* Review Stars */}
+        <div className="flex flex-col gap-1">
+          <p className="font-medium text-gray-800 text-sm">Start your Review</p>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <span
+                key={n}
+                onClick={() => {
+                  setSelectedRating(n);
+                  setShowReviewForm(true);
+                }}
+                className="text-gray-400 text-3xl cursor-pointer hover:text-yellow-400 transition"
+              >
+                ★
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
 
-    {/* Navigation */}
-    <nav className="mt-2 border-t pt-3 flex flex-wrap gap-4 text-gray-700 font-semibold text-sm">
-      <a href="#overview" className="hover:text-blue-600">
-        Overview
-      </a>
-      <a href="#photos" className="border-b-2 border-blue-600 text-blue-600">
-        Photos
-      </a>
-      <a href="#packages" className="hover:text-blue-600">
-        Tour Packages
-      </a>
-      <a href="#info" className="hover:text-blue-600">
-        Quick Info
-      </a>
-      <a href="#services" className="hover:text-blue-600">
-        Services
-      </a>
-      <a href="#reviews" className="hover:text-blue-600">
-        Reviews
-      </a>
+    {/* NAVIGATION LINKS */}
+    <nav className="mt-2 border-t pt-3 flex flex-wrap gap-4 sm:gap-6 text-gray-700 font-semibold text-sm">
+      <a href="#overview" className="hover:text-blue-600">Overview</a>
+      <a href="#photos" className="border-b-2 border-blue-600 text-blue-600">Photos</a>
+      <a href="#packages" className="hover:text-blue-600">Tour Packages</a>
+      <a href="#info" className="hover:text-blue-600">Quick Info</a>
+      <a href="#services" className="hover:text-blue-600">Services</a>
+      <a href="#reviews" className="hover:text-blue-600">Reviews</a>
     </nav>
   </div>
-</header>
 
+  {/* TAGS + BOOKMARK */}
+  <div className="absolute top-4 right-4 flex flex-wrap items-center gap-2 z-10 max-w-[200px] justify-end">
+    <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-xs">
+      Travel Agents
+    </span>
+    <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-xs">
+      Tour Operators For Chardham
+    </span>
+    <button
+      onClick={() => setSaved(!saved)}
+      className={`ml-2 border rounded p-2 transition ${
+        saved ? "bg-yellow-400 text-white" : "hover:bg-gray-100"
+      }`}
+      title="Save"
+    >
+      <Bookmark
+        size={18}
+        className={saved ? "fill-white" : ""}
+        fill={saved ? "white" : "none"}
+      />
+    </button>
+  </div>
+</header>
 
 
        {/* MAIN CONTENT SPLIT */}
       <div className="flex flex-col lg:flex-row gap-6 w-full">
         {/* LEFT SIDE */}
-        <div className="w-full lg:w-[80%] flex flex-col gap-6 mb-6 border rounded-md p-5 shadow-sm relative">
+        <div className="w-full lg:w-[80%] flex flex-col gap-6">
 
           {/* Photos */}
             <section id="photos">
@@ -225,7 +221,6 @@ const VerifiedTransportDetails = () => {
             </div>
 
         </section>
-        <HappyCustomer />
 
 
          {/* Quick Info & Highlights from the Business */}
