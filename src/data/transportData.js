@@ -1,4 +1,4 @@
-import ayodhya from '../assets/images/verified/ayodhaya.jpg';
+import ayodhya from '../assets/images/verified/ayodhya.jpg';
 import ram from '../assets/images/verified/ram.jpg';
 import shivam from '../assets/images/verified/Shivam_travels.jpeg';
 import arora from '../assets/images/verified/arora.jpeg'
@@ -17,6 +17,18 @@ const transportData = [
     phone: "08147943975",
     whatsapp: "918147943975",
     tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],
+    tourPackages: [
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Nearby Pilgrimage",
+        description: "Half day trip to nearby temples",
+        price: "₹1499",
+      },
+    ],
   },
   {
     id: 2,
@@ -27,6 +39,18 @@ const transportData = [
     reviews: 98,
     verified: true,
     website: "https://example.com/skyline",
+     tourPackages: [
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Nearby Pilgrimage",
+        description: "Half day trip to nearby temples",
+        price: "₹1499",
+      },
+    ], // ✅ Add this
   },
   {
     id: 3,
@@ -37,6 +61,18 @@ const transportData = [
     reviews: 150,
     verified: true,
     website: "https://ayodhya.infinityfreeapp.com/?i=1",
+     tourPackages: [
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Nearby Pilgrimage",
+        description: "Half day trip to nearby temples",
+        price: "₹1499",
+      },
+    ], // ✅ Add this
   },
   {
     id: 4,
@@ -47,6 +83,18 @@ const transportData = [
     reviews: 75,
     verified: true,
     website: "https://example.com/extra",
+     tourPackages: [
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Nearby Pilgrimage",
+        description: "Half day trip to nearby temples",
+        price: "₹1499",
+      },
+    ],// ✅ Add this
   },
   {
     id: 5,
@@ -57,6 +105,18 @@ const transportData = [
     reviews: 80,
     verified: true,
     website: "https://example.com/shiv",
+    tourPackages: [
+      {
+        destination: "Ayodhya",
+        description: "Darshan & Sightseeing tour",
+        price: "₹2999",
+      },
+      {
+        destination: "Nearby Pilgrimage",
+        description: "Half day trip to nearby temples",
+        price: "₹1499",
+      },
+    ], // ✅ Add this
   },
 ];
 

@@ -19,6 +19,7 @@ import GetAQuote from './components/GetAQuote.jsx';
 import TranspotersLists from './components/homeComponent/TranspotersLists.jsx';
 import TrendingDestinationLists from './components/homeComponent/TrendingDestinationLists.jsx';
 import InternationalDestination from './pages/InternationalDestination.jsx';
+import VerifiedTransportDetails from './components/VerifiedTransportDetails.jsx';
 
 const App = () => {
   return (
@@ -41,7 +42,8 @@ const App = () => {
         <Route path='/trending-destinations/:destinationId/:agencyId' element={<AgentDetailPage/>} />
         <Route path='/nawlesh' element={<EnquiryForm/>} />
         <Route path='/get-a-quote/:destinationId/:agencyId' element={<GetAQuote />} />
-        <Route path='/verified-transpoters-list' element={<TranspotersLists />} />
+        <Route path='/verified-transporters-list' element={<TranspotersLists />} />
+        <Route path='/verified-transport-details/:id' element={<VerifiedTransportDetails />} />
         <Route path='/trending-destination-list' element={<TrendingDestinationLists />} />
         <Route path='/international' element={<InternationalDestination />} />
         {/* Add more routes here as needed */}

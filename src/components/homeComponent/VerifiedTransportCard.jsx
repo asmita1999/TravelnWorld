@@ -69,7 +69,7 @@ const VerifiedTransportCard = () => {
           Verified Transporters
         </h1>
         <button
-          onClick={() => navigate("/verified-transpoters-list")}
+          onClick={() => navigate("/verified-transporters-list")}
           className="absolute right-0 top-0 text-sm px-4 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-600 transition"
         >
           View All
@@ -113,7 +113,8 @@ const VerifiedTransportCard = () => {
               <img
                 src={item.image}
                 alt={item.title}
-                className="w-full h-28 object-cover rounded-t-lg p-1"
+                className="w-full h-28 object-cover rounded-t-lg p-1 cursor-pointer"
+                onClick={() => navigate(`/verified-transport-details/${item.id}`)}
               />
             </a>
             <div className="flex flex-col flex-grow p-2 text-sm h-full">
@@ -148,14 +149,12 @@ const VerifiedTransportCard = () => {
 
               {/* CTA Button */}
               <div className="mt-auto flex justify-center">
-                <a
-                  href={item.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => navigate(`/verified-transport-details/${item.id}`)}
                   className="bg-blue-600 text-white text-xs px-4 py-1 rounded-full hover:bg-blue-700 transition mx-auto"
                 >
                   View Profile
-                </a>
+                </button>
               </div>
             </div>
           </div>
