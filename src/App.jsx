@@ -20,6 +20,8 @@ import TranspotersLists from './components/homeComponent/TranspotersLists.jsx';
 import TrendingDestinationLists from './components/homeComponent/TrendingDestinationLists.jsx';
 import InternationalDestination from './pages/InternationalDestination.jsx';
 import VerifiedTransportDetails from './components/VerifiedTransportDetails.jsx';
+import CustomerTourPackages from './components/verifiedTransportDetails/CustomerTourPackages.jsx';
+import CustomerVerifiedReview from './components/verifiedTransportDetails/CustomerVerifiedReview.jsx';
 
 const App = () => {
   return (
@@ -44,8 +46,11 @@ const App = () => {
         <Route path='/get-a-quote/:destinationId/:agencyId' element={<GetAQuote />} />
         <Route path='/verified-transporters-list' element={<TranspotersLists />} />
         <Route path='/verified-transport-details/:id' element={<VerifiedTransportDetails />} />
+        <Route path="/verified-transport-details/:id/packages" element={<CustomerTourPackages />} />
+        <Route path="/verified-transport-details/:id/reviews" element={<CustomerVerifiedReview />} />
         <Route path='/trending-destination-list' element={<TrendingDestinationLists />} />
         <Route path='/international' element={<InternationalDestination />} />
+
         {/* Add more routes here as needed */}
       </Routes>
       
