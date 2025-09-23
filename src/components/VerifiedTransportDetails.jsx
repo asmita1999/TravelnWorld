@@ -8,7 +8,7 @@ import QuickSection from "./verifiedTransportDetails/QuickSection";
 import HappyCustomer from "./verifiedTransportDetails/HappyCustomer";
 import VerifiedReview from "./verifiedTransportDetails/VerifiedReview";
 import RightSide from "./verifiedTransportDetails/RightSide";
-import HappyCustomerImages from "./verifiedTransportDetails/HappyCustomerImages";
+// import HappyCustomerImages from "./verifiedTransportDetails/HappyCustomerImages";
 import HappyCustomerVideo from "./verifiedTransportDetails/HappyCustomerVideo";
 
 const VerifiedTransportDetails = () => {
@@ -49,7 +49,7 @@ const VerifiedTransportDetails = () => {
             <QuickSection/>
 
             <HappyCustomer/>
-            <HappyCustomerImages />
+            {/* <HappyCustomerImages /> */}
             <HappyCustomerVideo />
           {/* Reviews */}
           <VerifiedReview/>
@@ -57,7 +57,7 @@ const VerifiedTransportDetails = () => {
         </div>
         {/* RIGHT SIDE */}
         <div className="w-full lg:w-[20%] flex flex-col gap-6">
-               <RightSide travelItem={travelItem} />
+          <RightSide travelItem={travelItem} />
         </div>
 
     </div>

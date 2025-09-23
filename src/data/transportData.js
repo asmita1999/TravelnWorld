@@ -91,7 +91,6 @@ const transportData = [
     rating: 4.9,
     reviews: 150,
     verified: true,
-    website: "https://ayodhya.infinityfreeapp.com/?i=1",
     phone: "08147943975",
     whatsapp: "918147943975",
     tags: ["Hotels", "Hotels Rs 501 To Rs 1000"],

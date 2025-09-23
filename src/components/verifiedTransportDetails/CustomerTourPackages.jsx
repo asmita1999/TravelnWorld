@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import transportData from "../../data/transportData";
 import Header from "../../components/verifiedTransportDetails/Header";
 import RightSide from "../../components/verifiedTransportDetails/RightSide";
+import TourPackages from "../../assets/images/tourPackage.jpeg";
 
 const CustomerTourPackages = () => {
     const navigate =useNavigate ();
@@ -35,6 +36,13 @@ const CustomerTourPackages = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {travelItem.tourPackages.map((pkg, i) => (
               <div key={i} className="border rounded-md p-4 shadow-sm">
+                <div className="h-1/2 w-full">
+                  <img
+                    src={TourPackages}
+                    alt={`Package for ${pkg.destination}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <h3 className="font-bold text-base mb-1">Packages For {pkg.destination}</h3>
                 <p className="text-gray-600 text-sm mb-2">{pkg.description}</p>
                 <p className="font-semibold text-sm mb-2">{pkg.price} onwards</p>

@@ -1,66 +1,107 @@
 import React, { useEffect, useRef, useState } from "react";
 import transportData from "../../data/transportData";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-
+ 
 const CARD_WIDTH = 260;
 const CARD_GAP = 24;
-const AUTO_SCROLL_SPEED = 1;
-const PAUSE_DURATION = 1000;
-
+const AUTO_SCROLL_SPEED = 1; // px per frame
+const PAUSE_DURATION = 1000; // ms
+ 
 const VerifiedTransportCard = () => {
   const data = transportData;
   const scrollRef = useRef(null);
+  const rafRef = useRef(null);
   const pauseTimeout = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-  
+ 
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+ 
   const navigate = useNavigate();
-  // Auto-scroll
+ 
+  // Auto-scroll continuous marquee
   useEffect(() => {
     const container = scrollRef.current;
-    if (!container || isPaused) return;
-
-    let animationId;
-
-    const autoScroll = () => {
-      if (container.scrollLeft >= container.scrollWidth / 2) {
-        container.scrollLeft = 0;
-      } else {
+    if (!container) return;
+ 
+    const scrollStep = () => {
+      if (!isPaused && !isDragging.current) {
         container.scrollLeft += AUTO_SCROLL_SPEED;
+ 
+        // Reset seamlessly at half scroll (since data is doubled)
+        if (container.scrollLeft >= container.scrollWidth / 2) {
+          container.scrollLeft = 0;
+        }
       }
-      animationId = requestAnimationFrame(autoScroll);
+      rafRef.current = requestAnimationFrame(scrollStep);
     };
-
-    animationId = requestAnimationFrame(autoScroll);
-    return () => cancelAnimationFrame(animationId);
+ 
+    rafRef.current = requestAnimationFrame(scrollStep);
+ 
+    return () => cancelAnimationFrame(rafRef.current);
   }, [isPaused]);
-
-  // Scroll manually
+ 
+  // Manual drag handlers
+  const handleMouseDown = (e) => {
+    isDragging.current = true;
+    startX.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+    setIsPaused(true);
+  };
+ 
+  const handleMouseLeave = () => {
+    isDragging.current = false;
+  };
+ 
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    clearTimeout(pauseTimeout.current);
+    pauseTimeout.current = setTimeout(() => setIsPaused(false), PAUSE_DURATION);
+  };
+ 
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = x - startX.current;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+ 
+  // Touch handlers
+  const handleTouchStart = (e) => {
+    isDragging.current = true;
+    startX.current = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+    setIsPaused(true);
+  };
+ 
+  const handleTouchMove = (e) => {
+    if (!isDragging.current) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = x - startX.current;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+ 
+  const handleTouchEnd = () => {
+    isDragging.current = false;
+    clearTimeout(pauseTimeout.current);
+    pauseTimeout.current = setTimeout(() => setIsPaused(false), PAUSE_DURATION);
+  };
+ 
+  // Button navigation
   const handleScroll = (direction) => {
     const container = scrollRef.current;
-    const scrollAmount = direction === "next" ? CARD_WIDTH + CARD_GAP : -(CARD_WIDTH + CARD_GAP);
+    const scrollAmount =
+      direction === "next" ? CARD_WIDTH + CARD_GAP : -(CARD_WIDTH + CARD_GAP);
+ 
     container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    pauseTemporarily();
-  };
-
-  const pauseTemporarily = () => {
     setIsPaused(true);
     clearTimeout(pauseTimeout.current);
     pauseTimeout.current = setTimeout(() => setIsPaused(false), PAUSE_DURATION);
   };
-
-  // Swipe events for mobile
-  const handleTouchStart = (e) => (touchStartX.current = e.touches[0].clientX);
-  const handleTouchEnd = (e) => {
-    touchEndX.current = e.changedTouches[0].clientX;
-    const deltaX = touchEndX.current - touchStartX.current;
-    if (Math.abs(deltaX) > 50) {
-      handleScroll(deltaX < 0 ? "next" : "prev");
-    }
-  };
-
+ 
   return (
     <div className="relative flex flex-col items-center gap-6 px-4 sm:px-6 md:px-8 lg:px-16 py-6 bg-gray-100 min-h-fit">
       {/* Header */}
@@ -75,33 +116,54 @@ const VerifiedTransportCard = () => {
           View All
         </button>
       </div>
-
+ 
       {/* Prev Button */}
       <button
         onClick={() => handleScroll("prev")}
-        className="hidden sm:flex absolute left-1 top-1/2 transform -translate-y-1/2 z-10 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
+        className="hidden sm:flex absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
         aria-label="Previous"
       >
-        <ChevronLeftIcon className="h-6 w-6" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
       </button>
-
+ 
       {/* Next Button */}
       <button
         onClick={() => handleScroll("next")}
-        className="hidden sm:flex absolute right-1 top-1/2 transform -translate-y-1/2 z-10 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
+        className="hidden sm:flex absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700 transition"
         aria-label="Next"
       >
-        <ChevronRightIcon className="h-6 w-6" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
       </button>
-
+ 
       {/* Cards Scroll Area */}
       <div
         ref={scrollRef}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className="overflow-x-auto no-scrollbar w-full scroll-smooth px-1 sm:px-2 md:px-4"
+        className="overflow-hidden no-scrollbar w-full px-1 sm:px-2 md:px-4"
         style={{ whiteSpace: "nowrap" }}
       >
         {[...data, ...data].map((item, index) => (
@@ -109,14 +171,14 @@ const VerifiedTransportCard = () => {
             key={index}
             className="inline-block align-top w-[260px] mr-[24px] last:mr-0 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex-shrink-0"
           >
-            <a href={item.website} target="_blank" rel="noopener noreferrer">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-28 object-cover rounded-t-lg p-1 cursor-pointer"
-                onClick={() => navigate(`/verified-transport-details/${item.id}`)}
-              />
-            </a>
+           
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-28 object-cover rounded-t-lg p-1 cursor-pointer"
+            onClick={() => navigate(`/verified-transport-details/${item.id}`)}
+          />
+           
             <div className="flex flex-col flex-grow p-2 text-sm h-full">
               {/* Title + Verified */}
               <div className="flex justify-between items-center mb-1">
@@ -129,7 +191,7 @@ const VerifiedTransportCard = () => {
                   </span>
                 )}
               </div>
-
+ 
               {/* Location */}
               <div className="flex items-center text-gray-500 text-xs mb-1 overflow-hidden text-ellipsis whitespace-nowrap">
                 <svg
@@ -141,12 +203,12 @@ const VerifiedTransportCard = () => {
                 </svg>
                 <span className="truncate">{item.location}</span>
               </div>
-
+ 
               {/* Rating */}
               <div className="text-yellow-500 text-xs mb-2">
                 ★ {item.rating} ({item.reviews} reviews)
               </div>
-
+ 
               {/* CTA Button */}
               <div className="mt-auto flex justify-center">
                 <button
@@ -158,11 +220,10 @@ const VerifiedTransportCard = () => {
               </div>
             </div>
           </div>
-
         ))}
       </div>
     </div>
   );
 };
-
+ 
 export default VerifiedTransportCard;

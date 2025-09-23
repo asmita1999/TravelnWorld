@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import ImageGallery from '../ImageGallery'; 
 import VideoGallery from '../VideoGallery';
 
 function Gallery({ travelItem }) {
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
   const [isVideoGalleryOpen, setIsVideoGalleryOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <section id="photos">
@@ -48,7 +50,9 @@ function Gallery({ travelItem }) {
 
       {/* Upload Button */}
       <div className="mt-4">
-        <button className="bg-blue-600 text-white px-5 py-2 rounded font-semibold">
+        <button 
+          onClick={() => navigate('/b2blogin')}
+          className="bg-blue-600 text-white px-5 py-2 rounded font-semibold">
           Upload Photos
         </button>
       </div>

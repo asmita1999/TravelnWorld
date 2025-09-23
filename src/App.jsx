@@ -18,10 +18,16 @@ import EnquiryForm from './forms/EnquiryForm.jsx';
 import GetAQuote from './components/GetAQuote.jsx';
 import TranspotersLists from './components/homeComponent/TranspotersLists.jsx';
 import TrendingDestinationLists from './components/homeComponent/TrendingDestinationLists.jsx';
-import InternationalDestination from './pages/InternationalDestination.jsx';
+// import InternationalDestination from './pages/InternationalDestination.jsx';
 import VerifiedTransportDetails from './components/VerifiedTransportDetails.jsx';
 import CustomerTourPackages from './components/verifiedTransportDetails/CustomerTourPackages.jsx';
 import CustomerVerifiedReview from './components/verifiedTransportDetails/CustomerVerifiedReview.jsx';
+import InternationalDestinationsList from './pages/InternationalDestinationsList.jsx';
+import DomesticDestinationsList from './pages/DomesticDestinationsList.jsx';
+import DomesticItinerary from './components/topMostTourPackages/DomesticItinerary.jsx';
+import InternationalItinerary from './components/topMostTourPackages/InternationalItinerary.jsx';
+import InternationalItineraryDetailPage from './components/topMostTourPackages/InternationalItineraryDetailPage.jsx';
+import DomesticItineraryDetailPage from './components/topMostTourPackages/DomesticItineraryDetailPage.jsx';
 
 const App = () => {
   return (
@@ -49,8 +55,14 @@ const App = () => {
         <Route path="/verified-transport-details/:id/packages" element={<CustomerTourPackages />} />
         <Route path="/verified-transport-details/:id/reviews" element={<CustomerVerifiedReview />} />
         <Route path='/trending-destination-list' element={<TrendingDestinationLists />} />
-        <Route path='/international' element={<InternationalDestination />} />
-
+        {/* <Route path='/international' element={<InternationalDestination />} /> */}
+        <Route path='/international' element={<InternationalDestinationsList />} />
+        <Route path='/international-itinerary/:destinationId' element={<InternationalItinerary />} />
+        <Route path='/international-itinerary-detail/:destinationId/:itineraryId' element={<InternationalItineraryDetailPage />} />
+        <Route path='/domestic' element={<DomesticDestinationsList />} />
+        <Route path='/domestic-itinerary/:destinationId' element={<DomesticItinerary />} />
+        <Route path='/domestic-itinerary/:destinationId/:itineraryId' element={<DomesticItineraryDetailPage />} />
+        
         {/* Add more routes here as needed */}
       </Routes>
       
